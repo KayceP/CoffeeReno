@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.ico">
+    <title>Caffeinate in Reno!</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Caffeinate in Reno!</h1>
+            <h2>Where will your adventure take you today?</h2>
+        </div>
+        <div id="quote-container">
+            <div id="quote"></div>
+            <div id="author"></div>
+        </div>
+        <div class="nav">
+            <input data-bind="textInput: filterValue" id="searchList" placeholder="Enter a keyword to refine your possible caffeination stations">
+        </div>
+        <div class="aside">
+            <ul data-bind="foreach: placeList">
+                <li data-bind="visible: $data.visible,attr: {id: $data.id},text: $data.id, click: $parent.onClickListener"></li>
+            </ul>
+        </div>
+        <!-- Display the Google Map & CSS controls the size/placement. -->
+        <div id="map"></div>
+
+        <div class="footer">
+            <h3>Dynamic background images from <a href="https://source.unsplash.com">Unsplash</a>.</h3>
+        </div>
+    </div>
+    <!-- Load API's Asynchronously -->
+    <script async defer onerror="forismaticError()" src="https://api.forismatic.com/api/1.0/?method=getQuote&amp;format=jsonp&amp;jsonp=parseQuote&amp;lang=en"></script>
+    <script async defer onerror="googleMapsError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBRp_auo7l8jFHeMshZSNVEgNs70qntAXQ&v=3&callback=initMap"></script>
+    <!-- End API's -->
+
+    <!-- Load All Javascript Requirements-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/knockout-3.4.2.js"></script>
+    <script src="js/core_app.js" type="text/javascript"></script>
+    <!-- End Javascript Requirements-->
+
+</body>
+
+</html>
