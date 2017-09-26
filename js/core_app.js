@@ -148,11 +148,12 @@ function ViewModel() {
         });
     });
 
-// Responsiveness for clicking locations on the list.
+// Responsiveness for locations on the list.
     self.onClickListener = function (data) {
         listLocations().forEach(function (place) {
             if (data.title === place.title) {
                 place.openInfoWindow();
+                place.triggerMarker(place.mapMarker);
             } else {
                 place.closeInfoWindow();
             }
