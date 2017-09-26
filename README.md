@@ -25,7 +25,7 @@ This project utilizes:
   - [Check yours here!](https://www.whatismybrowser.com/)
 
 ## Running
-- For a live demo, click here: [http://kaycep.github.io/Coffee-Reno](http://kaycep.github.io/Coffee-Reno)
+- For a live demo, click here: [http://kaycep.github.io/CoffeeReno](http://kaycep.github.io/CoffeeReno)
 
  - To run locally, download or clone the repository, then launch the site by double clicking index.html.
 
