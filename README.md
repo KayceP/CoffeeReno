@@ -32,8 +32,8 @@ This project utilizes:
 ## Credits
 - [Google Maps API](https://developers.google.com/maps/)
 - [Google Maps API - Javascript: For Map / Markers / Animation](https://developers.google.com/maps/documentation/javascript/)
-- [Knockout JS](http://knockoutjs.com/documentation/introduction.html)
 - [Forismatic API](https://forismatic.com/en/api/)
+- [Knockout JS](http://knockoutjs.com/documentation/introduction.html)
 - [Unsplash Source](https://source.unsplash.com/)
 - [JQuery / JQuery Animation Documentation](http://api.jquery.com/)
 - [Max Vargas on Codepen - Dynamic Background & Quote Concept](https://codepen.io/maxslob/pen/bgbOgV) 
