@@ -1,7 +1,4 @@
 // Define all variables to satisfy strict mode.
-var document;
-var setTimeout;
-var alert;
 var ko;
 var google;
 
