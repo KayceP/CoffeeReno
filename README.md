@@ -1,5 +1,5 @@
 ![Part of the Udacity Full Stack Web Developer Nanodegree](https://img.shields.io/badge/Udacity-Full%20Stack%20Web%20Developer%20Nanodegree-blue.svg)
-> Developed for project 4 of 5 as part of the **Udacity Full Stack Web Developer Nanodegree**.
+> Developed for project 5 of 6 as part of the **Udacity Full Stack Web Developer Nanodegree**.
 
 # Coffee Reno
 A neighborhood map program made for the [Udacity Full Stack Web Developer Nanodegree Program](https://www.udacity.com/uconnect/intensive/full-stack-web-developer-nanodegree), with Javascript.
