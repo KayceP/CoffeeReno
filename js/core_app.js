@@ -3,13 +3,14 @@ var ko;
 var google;
 
 // Create a location object with default values
-function newLocation(name, fsid) {
+function getNewLocation(name, fsID) {
     var self = {
-        fid: fsid,
+        fid: fsID,
         id: ko.observable(name),
         title: ko.observable(name),
         lat: ko.observable(0),
         lng: ko.observable(0),
+        address: ko.observable(""),
         visible: ko.observable(false)
     };
 
@@ -20,11 +21,11 @@ var map;
 var renoLat = 39.529633;
 var renoLng = -119.813803;
 var listLocations = ko.observableArray([
-    newLocation("The Hub Coffee Roasters", "4ff1c28fe4b0c8e6f65ae2f6"),
-    newLocation("The Jungle", "55738ad6498ee2c077cea239"),
-    newLocation("Bibo Coffee Company", "4bf5738e6a31d13a0de8962e"),
-    newLocation("The Purple Bean", "4beb08f562c0c9285a9de1d4"),
-    newLocation("Sips Coffee & Tea", "4bacec0ef964a520ea193be3")
+    getNewLocation("The Hub Coffee Roasters", "4ff1c28fe4b0c8e6f65ae2f6"),
+    getNewLocation("The Jungle", "55738ad6498ee2c077cea239"),
+    getNewLocation("Bibo Coffee Company", "4bf5738e6a31d13a0de8962e"),
+    getNewLocation("The Purple Bean", "4beb08f562c0c9285a9de1d4"),
+    getNewLocation("Sips Coffee & Tea", "4bacec0ef964a520ea193be3")
 ]);
 
 listLocations().forEach(function (place) {
@@ -43,6 +44,7 @@ listLocations().forEach(function (place) {
         place.title(json.response.venue.name);
         place.lat(json.response.venue.location.lat);
         place.lng(json.response.venue.location.lng);
+        place.address(json.response.venue.location.address);
         place.visible(true);
 
         addMarkerToMap(place);
@@ -72,7 +74,7 @@ function addMarkerToMap(data) {
     });
 
     var infowindow = new google.maps.InfoWindow({
-        content: data.id()
+        content: data.id() + "<br>" + data.address()
     });
 
     data.mapMarker = marker;
