@@ -12,27 +12,22 @@
 
 <body>
     <div class="container">
-        <div class="header">
+        <header>
             <h1>Caffeinate in Reno!</h1>
-        </div>
-        <div id="quote-container">
-            <div id="quote"></div>
-            <div id="author"></div>
-        </div>
-        <div class="nav">
+        </header>
+        <nav>
             <input data-bind="textInput: filterValue" id="searchList" placeholder="Enter a keyword to refine your possible caffeination stations">
-        </div>
-        <div class="aside">
+        </nav>
+        <aside>
             <ul data-bind="foreach: placeList">
                 <li data-bind="visible: $data.visible,attr: {id: $data.id},text: $data.id, click: $parent.onClickListener"></li>
             </ul>
-        </div>
+        </aside>
         <!-- Display the Google Map & CSS controls the size/placement. -->
         <div id="map"></div>
-
-        <div class="footer">
+        <footer>
             <h3>Dynamic background images from <a href="https://source.unsplash.com">Unsplash</a>.</h3>
-        </div>
+        </footer>
     </div>
 
     <!-- Load All Javascript Requirements-->
