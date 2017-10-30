@@ -2,7 +2,7 @@
 > Developed for project 5 of 6 as part of the **Udacity Full Stack Web Developer Nanodegree**.
 
 # Coffee Reno
-A neighborhood map program made for the [Udacity Full Stack Web Developer Nanodegree Program](https://www.udacity.com/uconnect/intensive/full-stack-web-developer-nanodegree), with Javascript.
+A neighborhood map program made for the [Udacity Full Stack Web Developer Nanodegree](https://www.udacity.com/uconnect/intensive/full-stack-web-developer-nanodegree), with Javascript.
 
 ![screenshot](https://i.imgur.com/guMgFBL.png)
 
