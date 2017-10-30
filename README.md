@@ -8,7 +8,7 @@ A neighborhood map program made for the [Udacity Full Stack Web Developer Nanode
 
 ## Project Overview
 
-For this project, we were tasked with creating a neighborhood map using public API's. I decided to focus mine on the many wonderful coffee offerings Reno has, and added a touch of local flair by utilizing the [UNR](https://www.unr.edu/) colors. In addition, the page features random background images from Unsplash.
+For this project, we were tasked with creating a neighborhood map using public API's. I decided to focus mine on the my favorite coffee offerings Reno has, and added a touch of local flair by utilizing the [UNR](https://www.unr.edu/) colors. In addition, the page features random background images from Unsplash.
 
 This project utilizes:
 
