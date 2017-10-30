@@ -2,125 +2,127 @@
 var ko;
 var google;
 
-// Parsing for dynamic background & quote.
-function parseQuote(response) {
-    "use strict";
-    document.getElementById("quote").innerHTML = response.quoteText;
-    document.getElementById("author").innerHTML = "Author - <b>" + response.quoteAuthor + "</b>";
+// Create a location object with default values
+function newLocation(name, fsid) {
+    var self = {
+        fid: fsid,
+        id: ko.observable(name),
+        title: ko.observable(name),
+        lat: ko.observable(0),
+        lng: ko.observable(0),
+        visible: ko.observable(false)
+    };
+
+    return self;
 }
 
-// Specify all locations on map.
-function model() {
-    "use strict";
-    var locations = [{
-        title: "The Hub",
-        lat: 39.521975,
-        lng: -119.822078,
-        id: "The Hub"
-    }, {
-        title: "The Jungle",
-        lat: 39.524982,
-        lng: -119.815983,
-        id: "The Jungle"
-    }, {
-        title: "Bibo Coffee Company",
-        lat: 39.536966,
-        lng: -119.811042,
-        id: "Bibo Coffee Company"
-    }, {
-        title: "Purple Bean",
-        lat: 39.531135,
-        lng: -119.833802,
-        id: "Purple Bean"
-    }, {
-        title: "Sips Coffee and Tea",
-        lat: 39.530438,
-        lng: -119.814742,
-        id: "Sips Coffee and Tea"
-    }];
-    return locations;
-}
+var map;
+var renoLat = 39.529633;
+var renoLng = -119.813803;
+var listLocations = ko.observableArray([
+    newLocation("The Hub Coffee Roasters", "4ff1c28fe4b0c8e6f65ae2f6"),
+    newLocation("The Jungle", "55738ad6498ee2c077cea239"),
+    newLocation("Bibo Coffee Company", "4bf5738e6a31d13a0de8962e"),
+    newLocation("The Purple Bean", "4beb08f562c0c9285a9de1d4"),
+    newLocation("Sips Coffee & Tea", "4bacec0ef964a520ea193be3")
+]);
 
-var listLocations = ko.observableArray(model());
+listLocations().forEach(function (place) {
+    var requestURL = "https://api.foursquare.com/v2/venues/" + place.fid;
+    var params = {
+        v: 20171028,
+        ll: renoLat + "," + renoLng,
+        client_id: "IRS2HTTGWUMCGKVJSDBUCGK0CMGSHZEFJ5CILK4VOTRNNBKG",
+        client_secret: "ITMLE4HJDI3DOG03V4XTVXMF4DIKY3VHD2FFC00PLUPQOYNN"
+    };
+    $.ajaxSetup({
+        "error": function () { foursquareError(place.title());}
+    });
+    $.getJSON(requestURL, params, function (json) {
+        place.id(json.response.venue.name);
+        place.title(json.response.venue.name);
+        place.lat(json.response.venue.location.lat);
+        place.lng(json.response.venue.location.lng);
+        place.visible(true);
+
+        addMarkerToMap(place);
+    });
+});
 
 // Initalize map location & position.
 function initMap() {
     "use strict";
-    var map = new google.maps.Map(document.getElementById("map"), {
+    map = new google.maps.Map(document.getElementById("map"), {
         center: {
-            lat: 39.529633,
-            lng: -119.813803
+            lat: renoLat,
+            lng: renoLng
         },
         zoom: 14
     });
+}
 
-// Define markers & content.
-    listLocations().forEach(function (data) {
-
-        var positionMk = new google.maps.LatLng(data.lat, data.lng);
-        var marker = new google.maps.Marker({
-            position: positionMk,
-            map: map,
-            title: data.title,
-            animation: google.maps.Animation.DROP
-        });
-
-        var infowindow = new google.maps.InfoWindow({
-            content: data.title
-        });
-
-        data.mapMarker = marker;
-
-        marker.addListener("click", function () {
-            data.triggerMarker(marker);
-            listLocations().forEach(function (place) {
-                if (data.title === place.title) {
-                    place.openInfoWindow();
-                } else {
-                    place.closeInfoWindow();
-                }
-            });
-        });
-
-        map.addListener("click", function () {
-            listLocations().forEach(function (place) {
-                place.closeInfoWindow();
-            });
-        });
-
-        var setMk = function (marker) {
-            infowindow.open(map, marker);
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function () {
-                marker.setAnimation(null);
-            }, 750);
-        };
-        data.triggerMarker = setMk.bind();
-
-        var openMk = function () {
-            infowindow.open(map, marker);
-        };
-        data.openInfoWindow = openMk.bind();
-
-        var closeMk = function () {
-            infowindow.close(map, marker);
-        };
-        data.closeInfoWindow = closeMk.bind();
-
+// Adds a new marker to the existing map
+function addMarkerToMap(data) {
+    var positionMk = new google.maps.LatLng(data.lat(), data.lng());
+    var marker = new google.maps.Marker({
+        position: positionMk,
+        map: map,
+        title: data.id(),
+        animation: google.maps.Animation.DROP
     });
 
+    var infowindow = new google.maps.InfoWindow({
+        content: data.id()
+    });
+
+    data.mapMarker = marker;
+
+    marker.addListener("click", function () {
+        data.triggerMarker(marker);
+        listLocations().forEach(function (place) {
+            if (data.id() === place.id()) {
+                place.openInfoWindow();
+            } else {
+                place.closeInfoWindow();
+            }
+        });
+    });
+
+    map.addListener("click", function () {
+        listLocations().forEach(function (place) {
+            place.closeInfoWindow();
+        });
+    });
+
+    var setMk = function (marker) {
+        infowindow.open(map, marker);
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function () {
+            marker.setAnimation(null);
+        }, 750);
+    };
+    data.triggerMarker = setMk.bind();
+
+    var openMk = function () {
+        infowindow.open(map, marker);
+    };
+    data.openInfoWindow = openMk.bind();
+
+    var closeMk = function () {
+        infowindow.close(map, marker);
+    };
+    data.closeInfoWindow = closeMk.bind();
 }
 
 // Define ViewModel for list and sorting of list.
-
 function ViewModel() {
     "use strict";
+
     var self = {};
 
     self.placeList = ko.observableArray([]);
 
     listLocations().forEach(function (place) {
-        place.visible = ko.observable(true);
         self.placeList.push(place);
     });
 
@@ -129,7 +131,7 @@ function ViewModel() {
     self.filterList = ko.computed(function () {
         listLocations().forEach(function (place) {
             var searchParam = self.filterValue().toLowerCase();
-            var toBeSearched = place.title.toLowerCase();
+            var toBeSearched = place.id().toLowerCase();
 
             place.visible(toBeSearched.indexOf(searchParam) > -1);
 
@@ -145,10 +147,10 @@ function ViewModel() {
         });
     });
 
-// Responsiveness for locations on the list.
+    // Responsiveness for locations on the list.
     self.onClickListener = function (data) {
         listLocations().forEach(function (place) {
-            if (data.title === place.title) {
+            if (data.id() === place.id()) {
                 place.openInfoWindow();
                 place.triggerMarker(place.mapMarker);
             } else {
@@ -163,9 +165,9 @@ function ViewModel() {
 ko.applyBindings(new ViewModel());
 
 // Error handling for API's.
-function forismaticError() {
+function foursquareError(location) {
     "use strict";
-    alert("Forismatic API is unreachable, please check your internet connection and try again.");
+    alert("Foursquare API is unreachable, location data for " + location + " will be unavailable.");
 }
 
 function googleMapsError() {
